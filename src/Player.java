@@ -7,17 +7,10 @@ public class Player {
    private CardDeck depositDeck;
    private List<Integer> hand = new ArrayList<>();
     
-    public Player(int currentPlayer, int totalPlayer) {
+    public Player(int currentPlayer, CardDeck drawDeck, CardDeck depositDeck) {
         this.playerIndex = currentPlayer;
-        //this.drawDeck = ;
-        
-        // Allocates deposit deck value
-        if (currentPlayer == totalPlayer) {
-            // Loops back to Deck 1
-            //depositDeck = 0;
-        } else {
-            //depositDeck = currentPlayer + 1;
-        }
+        this.drawDeck = drawDeck;
+        this.depositDeck = depositDeck;
     }
 
     public void move() {
