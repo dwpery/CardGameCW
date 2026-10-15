@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player {
+public class Player implements Runnable {
    private int playerIndex;
    private CardDeck drawDeck;
    private CardDeck depositDeck;
@@ -21,7 +21,23 @@ public class Player {
         return hand;
     }
 
-    public void move() {
+    private boolean checkHand() {
+        boolean winFlag = true;
+        
+        int firstCard = hand.get(0);
+        for (int i = 0; i < hand.size(); i++) {
+            if (firstCard != hand.get(i)) {
+                winFlag = false;
+            }
+        }
+        
+        return winFlag;
+    }
 
+    @Override 
+    public void run() {
+        if (checkHand()) {
+            System.out.println("Player " + playerIndex + " wins");
+        }
     }
 }
