@@ -1,3 +1,5 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -6,11 +8,20 @@ public class Player implements Runnable {
    private CardDeck drawDeck;
    private CardDeck depositDeck;
    private List<Integer> hand = new ArrayList<>();
+   private FileWriter writer;
     
     public Player(int currentPlayer, CardDeck drawDeck, CardDeck depositDeck) {
         this.playerIndex = currentPlayer;
         this.drawDeck = drawDeck;
         this.depositDeck = depositDeck;
+        
+        // Creates file
+        try {
+            writer = new FileWriter("player" + playerIndex + "_output.txt");
+        } catch (IOException e) {
+            System.out.println("Failed to create file");
+            e.printStackTrace();
+        }
     }
 
     public void addCardToHand(int cardValue) {
@@ -32,6 +43,25 @@ public class Player implements Runnable {
         }
         
         return winFlag;
+    }
+
+    public synchronized void move() {
+        // Takes card from deck
+        int drawnCard = drawDeck.drawCard();
+
+        // Logs value of drawn card to .txt file
+        try {
+            writer.write("player " + playerIndex + " drws a " + drawnCard + " from deck " + drawnCard);
+        } catch (IOException e) {
+            System.out.println("Fsiled to write to file");
+            e.printStackTrace();
+        }
+
+        
+        
+        hand.add(drawnCard);
+
+        
     }
 
     @Override 
