@@ -10,16 +10,17 @@ public class CardDeck {
     }
 
     // Used to populate cards list during setup AND when player discards card
-    public void addCard(int cardValue) {
+    public synchronized void addCard(int cardValue) {
         cards.add(cardValue);
     }
 
     // Used by player to take card from deck for their hand
-    public int drawCard() {
+    public synchronized int drawCard() {
         return cards.remove(0);
     }
 
-    public List<Integer> getContents() {
-        return cards;
+    // Returns a list copy of every int within the deck
+    public synchronized List<Integer> getContents() {
+        return new ArrayList<>(cards);
     }
 }
