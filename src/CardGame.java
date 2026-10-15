@@ -27,7 +27,7 @@ public class CardGame {
             }
         }
 
-        // Reads cards from pack
+        // Distributes cards from pack in round robin form
         try (Scanner reader = new Scanner(new File(packFile))) {
             // Adds caards to players hands
             for (int n = 0; n < 4; n++) {
@@ -37,15 +37,13 @@ public class CardGame {
                 }
             }
             System.out.println("Decks");
-            // Adds remaining cards to decks
-            while (reader.hasNextLine()) {
-                for (int n = 0; n < 4; n++) {
-                    // Same num of playuers as decks so can use totalPlayers
-                    for (int i = 0; i < totalPlayers; i++) {
-                        decks[i].addCard(Integer.parseInt(reader.nextLine()));
-                        System.out.println(i + ": " + decks[i].getContents());
+            // Adds remaining cards to decks    
+            for (int n = 0; n < 4; n++) {
+                // Same num of playuers as decks so can use totalPlayers
+                for (int i = 0; i < totalPlayers; i++) {
+                    decks[i].addCard(Integer.parseInt(reader.nextLine()));
+                   System.out.println(i + ": " + decks[i].getContents());
                 }
-            }
             }
         } catch (FileNotFoundException e) {
             System.out.println("File not found!");
