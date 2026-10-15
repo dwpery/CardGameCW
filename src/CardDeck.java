@@ -10,7 +10,7 @@ public class CardDeck {
     }
 
     // Used to populate cards list during setup AND when player discards card
-    public void insertCard(int cardValue) {
+    public void addCard(int cardValue) {
         cards.add(cardValue);
     }
 
@@ -20,6 +20,6 @@ public class CardDeck {
     }
 
     public List<Integer> getContents() {
-        return new ArrayList<>(cards);
+        return cards;
     }
 }

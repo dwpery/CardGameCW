@@ -13,6 +13,14 @@ public class Player {
         this.depositDeck = depositDeck;
     }
 
+    public void addCardToHand(int cardValue) {
+        hand.add(cardValue);
+    }
+
+    public List<Integer> getHand() {
+        return hand;
+    }
+
     public void move() {
 
     }
