@@ -19,6 +19,7 @@ public class Player implements Runnable {
         // Creates file
         try {
             writer = new FileWriter("player" + playerIndex + "_output.txt");
+            writer.flush();
         } catch (IOException e) {
             System.out.println("Failed to create file");
             e.printStackTrace();
@@ -52,9 +53,10 @@ public class Player implements Runnable {
 
         // Logs value of drawn card to .txt file
         try {
-            writer.write("player " + playerIndex + " draws a " + drawnCard + " from deck " + drawDeck.getID());
+            writer.write("\nplayer " + playerIndex + " draws a " + drawnCard + " from deck " + drawDeck.getID());
+            writer.flush();
         } catch (IOException e) {
-            System.out.println("Fsiled to write to file");
+            System.out.println("Failed to write to file");
             e.printStackTrace();
         }
 
@@ -66,11 +68,12 @@ public class Player implements Runnable {
             if (cardToDiscard != playerIndex) {
                 depositDeck.addCard(cardToDiscard);
                 hand.remove(randomNum);
-
+                hand.add(drawnCard);
                 // Logs value of deposited card to .txt file
                 try {
-                    writer.write("player " + playerIndex + " discards a " + cardToDiscard + " to deck " + depositDeck.getID());
-                    writer.write("player " + playerIndex + " current hand " + hand);
+                    writer.write("\nplayer " + playerIndex + " discards a " + cardToDiscard + " to deck " + depositDeck.getID());
+                    writer.write("\nplayer " + playerIndex + " current hand " + hand);
+                    writer.flush();
                 } catch (IOException e) {
                     System.out.println("Fsiled to write to file");
                     e.printStackTrace();
@@ -79,28 +82,42 @@ public class Player implements Runnable {
                 discardFlag = true;
             }
         }
-
-        
-        
-        hand.add(drawnCard);
-
-        
     }
 
     @Override 
     public void run() {
         if (checkHand()) {
             System.out.println("Player " + playerIndex + " wins");
-            gameWon = true;
+            try {
+                
+                writer.close();
+            } catch (IOException e) {
+                System.out.println("Fsiled to write to file");
+                e.printStackTrace();
+            }
+            CardGame.gameWon = true;
             return;
         }
 
-        while (!gameWon) {
+        while (!CardGame.gameWon) {
             move();
 
             if (checkHand()) {
                 System.out.println("Player " + playerIndex + " wins");
-                gameWon = true;
+                try {
+                    writer.close();
+                } catch (IOException e) {
+                    System.out.println("Fsiled to write to file");
+                    e.printStackTrace();
+                }
+                CardGame.gameWon = true;
+                break;
+            }
+
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
                 break;
             }
         }

@@ -3,6 +3,8 @@ import java.io.File;
 import java.util.Scanner;
 
 public class CardGame {
+    //
+    public static volatile boolean gameWon = false;
     public static void main(String[] args) throws Exception {
         // Takes user input from Terminal to generate num of players + set of cards
         Scanner scanner = new Scanner(System.in);
@@ -58,6 +60,14 @@ public class CardGame {
         for (int i = 0; i < totalPlayers; i++) {
             playerThreads[i] = new Thread(players[i]);
             playerThreads[i].start();
+        }
+
+        for (int i = 0; i < totalPlayers; i++) {
+            try {
+                playerThreads[i].join();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
         }
 
     }
