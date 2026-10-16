@@ -9,6 +9,7 @@ public class Player implements Runnable {
    private CardDeck depositDeck;
    private List<Integer> hand = new ArrayList<>();
    private FileWriter writer;
+   boolean gameWon = false;
     
     public Player(int currentPlayer, CardDeck drawDeck, CardDeck depositDeck) {
         this.playerIndex = currentPlayer;
@@ -51,13 +52,33 @@ public class Player implements Runnable {
 
         // Logs value of drawn card to .txt file
         try {
-            writer.write("player " + playerIndex + " drws a " + drawnCard + " from deck " + drawnCard);
+            writer.write("player " + playerIndex + " draws a " + drawnCard + " from deck " + drawDeck.getID());
         } catch (IOException e) {
             System.out.println("Fsiled to write to file");
             e.printStackTrace();
         }
 
-        
+        // Picks random card from hand to discard
+        boolean discardFlag = false;
+        while (discardFlag != true) {
+            int randomNum = (int)(Math.random() * 5);
+            int cardToDiscard = hand.get(randomNum);
+            if (cardToDiscard != playerIndex) {
+                depositDeck.addCard(cardToDiscard);
+                hand.remove(randomNum);
+
+                // Logs value of deposited card to .txt file
+                try {
+                    writer.write("player " + playerIndex + " discards a " + cardToDiscard + " to deck " + depositDeck.getID());
+                    writer.write("player " + playerIndex + " current hand " + hand);
+                } catch (IOException e) {
+                    System.out.println("Fsiled to write to file");
+                    e.printStackTrace();
+                }
+
+                discardFlag = true;
+            }
+        }
         
         hand.add(drawnCard);
 
@@ -69,5 +90,6 @@ public class Player implements Runnable {
         if (checkHand()) {
             System.out.println("Player " + playerIndex + " wins");
         }
+
     }
 }

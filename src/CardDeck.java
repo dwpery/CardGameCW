@@ -9,6 +9,10 @@ public class CardDeck {
         this.deckID = deckNum;
     }
 
+    public int getID() {
+        return deckID;
+    }
+
     // Used to populate cards list during setup AND when player discards card
     public synchronized void addCard(int cardValue) {
         cards.add(cardValue);
