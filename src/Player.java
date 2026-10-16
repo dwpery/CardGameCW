@@ -61,7 +61,7 @@ public class Player implements Runnable {
         // Picks random card from hand to discard
         boolean discardFlag = false;
         while (discardFlag != true) {
-            int randomNum = (int)(Math.random() * 5);
+            int randomNum = (int)(Math.random() * hand.size());
             int cardToDiscard = hand.get(randomNum);
             if (cardToDiscard != playerIndex) {
                 depositDeck.addCard(cardToDiscard);
@@ -79,6 +79,8 @@ public class Player implements Runnable {
                 discardFlag = true;
             }
         }
+
+        
         
         hand.add(drawnCard);
 
@@ -89,6 +91,18 @@ public class Player implements Runnable {
     public void run() {
         if (checkHand()) {
             System.out.println("Player " + playerIndex + " wins");
+            gameWon = true;
+            return;
+        }
+
+        while (!gameWon) {
+            move();
+
+            if (checkHand()) {
+                System.out.println("Player " + playerIndex + " wins");
+                gameWon = true;
+                break;
+            }
         }
 
     }

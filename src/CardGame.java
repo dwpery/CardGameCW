@@ -16,10 +16,13 @@ public class CardGame {
         // Generates CardDeck and Player instances
         CardDeck[] decks = new CardDeck[totalPlayers];
         Player[] players = new Player[totalPlayers];
+        
         for (int i = 0; i < totalPlayers; i++) {
             decks[i] = new CardDeck(i + 1);
+        }
 
-            // 
+        for (int i = 0; i < totalPlayers; i++) {
+            // Needs seperate loop otherwise NullPointerException
             if ((i + 1) == totalPlayers) {
                 players[i] = new Player(i + 1, decks[i], decks[0]);
             } else {
@@ -48,6 +51,13 @@ public class CardGame {
         } catch (FileNotFoundException e) {
             System.out.println("File not found!");
             e.printStackTrace();
+        }
+
+        // Initialises each player on their own Thread
+        Thread[] playerThreads = new Thread[totalPlayers];
+        for (int i = 0; i < totalPlayers; i++) {
+            playerThreads[i] = new Thread(players[i]);
+            playerThreads[i].start();
         }
 
     }
