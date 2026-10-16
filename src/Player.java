@@ -66,6 +66,7 @@ public class Player implements Runnable {
             int randomNum = (int)(Math.random() * hand.size());
             int cardToDiscard = hand.get(randomNum);
             if (cardToDiscard != playerIndex) {
+                // Removes random non card from
                 depositDeck.addCard(cardToDiscard);
                 hand.remove(randomNum);
                 hand.add(drawnCard);
@@ -106,6 +107,7 @@ public class Player implements Runnable {
                 e.printStackTrace();
             }
             CardGame.gameWon = true;
+            CardGame.winningPlayer = playerIndex;
             return;
         }
 
@@ -124,6 +126,7 @@ public class Player implements Runnable {
                     e.printStackTrace();
                 }
                 CardGame.gameWon = true;
+                CardGame.winningPlayer = playerIndex;
                 break;
             }
 

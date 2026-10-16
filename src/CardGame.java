@@ -20,10 +20,12 @@ public class CardGame {
         CardDeck[] decks = new CardDeck[totalPlayers];
         Player[] players = new Player[totalPlayers];
         
+        // Generates a deck for each player
         for (int i = 0; i < totalPlayers; i++) {
             decks[i] = new CardDeck(i + 1);
         }
 
+        // Generates num of player instances input in terminal
         for (int i = 0; i < totalPlayers; i++) {
             // Needs seperate loop otherwise NullPointerException
             if ((i + 1) == totalPlayers) {
