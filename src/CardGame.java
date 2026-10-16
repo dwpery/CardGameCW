@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class CardGame {
     //
     public static volatile boolean gameWon = false;
+    public static volatile int winningPlayer = -1;
     public static void main(String[] args) throws Exception {
         // Takes user input from Terminal to generate num of players + set of cards
         Scanner scanner = new Scanner(System.in);

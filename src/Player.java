@@ -86,13 +86,23 @@ public class Player implements Runnable {
 
     @Override 
     public void run() {
+        try {
+            writer.write("\nplayer " + playerIndex + " initial hand " + hand);
+            writer.flush();
+        } catch (IOException e) {
+            System.out.println("Failed to write to file");
+            e.printStackTrace();
+        }
+
         if (checkHand()) {
             System.out.println("Player " + playerIndex + " wins");
             try {
-                
+                writer.write("\nplayer " + playerIndex + " wins");
+                writer.write("\nplayer " + playerIndex + " exits");
+                writer.write("\nplayer " + playerIndex + " final hand " + hand);
                 writer.close();
             } catch (IOException e) {
-                System.out.println("Fsiled to write to file");
+                System.out.println("Failed to write to file");
                 e.printStackTrace();
             }
             CardGame.gameWon = true;
@@ -105,6 +115,9 @@ public class Player implements Runnable {
             if (checkHand()) {
                 System.out.println("Player " + playerIndex + " wins");
                 try {
+                    writer.write("\nplayer " + playerIndex + " wins");
+                    writer.write("\nplayer " + playerIndex + " exits");
+                    writer.write("\nplayer " + playerIndex + " final hand " + hand);
                     writer.close();
                 } catch (IOException e) {
                     System.out.println("Fsiled to write to file");
@@ -119,6 +132,18 @@ public class Player implements Runnable {
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 break;
+            }
+        }
+
+        if (CardGame.winningPlayer != playerIndex && CardGame.winningPlayer != -1) {
+            try {
+                writer.write("\nplayer " + CardGame.winningPlayer + " has informed player " + playerIndex + " that player  "+ CardGame.winningPlayer + " has won");
+                writer.write("\nplayer " + playerIndex + " exits");
+                writer.write("\nplayer " + playerIndex + " hand: " + hand);
+                writer.close();
+            } catch (IOException e) {
+                System.out.println("Fsiled to write to file");
+                e.printStackTrace();
             }
         }
 
