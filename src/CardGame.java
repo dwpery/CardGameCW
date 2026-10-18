@@ -16,6 +16,9 @@ public class CardGame {
         System.out.println("Please enter the location of pack to load:");
         String packFile = scanner.nextLine();
 
+        // Closes scanner to prevent resource leak
+        scanner.close();
+
         // Generates CardDeck and Player instances
         CardDeck[] decks = new CardDeck[totalPlayers];
         Player[] players = new Player[totalPlayers];
@@ -29,6 +32,7 @@ public class CardGame {
         for (int i = 0; i < totalPlayers; i++) {
             // Needs seperate loop otherwise NullPointerException
             if ((i + 1) == totalPlayers) {
+                // The final players deposit deck loops back around to be the 1st deck
                 players[i] = new Player(i + 1, decks[i], decks[0]);
             } else {
                 players[i] = new Player(i + 1, decks[i], decks[i + 1]);
@@ -64,7 +68,8 @@ public class CardGame {
             playerThreads[i] = new Thread(players[i]);
             playerThreads[i].start();
         }
-
+        
+        //
         for (int i = 0; i < totalPlayers; i++) {
             try {
                 playerThreads[i].join();

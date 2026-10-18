@@ -76,7 +76,7 @@ public class Player implements Runnable {
                     writer.write("\nplayer " + playerIndex + " current hand " + hand);
                     writer.flush();
                 } catch (IOException e) {
-                    System.out.println("Fsiled to write to file");
+                    System.out.println("Failed to write to file");
                     e.printStackTrace();
                 }
 
@@ -122,7 +122,7 @@ public class Player implements Runnable {
                     writer.write("\nplayer " + playerIndex + " final hand " + hand);
                     writer.close();
                 } catch (IOException e) {
-                    System.out.println("Fsiled to write to file");
+                    System.out.println("Failed to write to file");
                     e.printStackTrace();
                 }
                 CardGame.gameWon = true;
@@ -131,7 +131,7 @@ public class Player implements Runnable {
             }
 
             try {
-                Thread.sleep(500);
+                Thread.sleep(200);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 break;
@@ -145,7 +145,7 @@ public class Player implements Runnable {
                 writer.write("\nplayer " + playerIndex + " hand: " + hand);
                 writer.close();
             } catch (IOException e) {
-                System.out.println("Fsiled to write to file");
+                System.out.println("Failed to write to file");
                 e.printStackTrace();
             }
         }
