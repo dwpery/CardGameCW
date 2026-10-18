@@ -34,7 +34,7 @@ public class Player implements Runnable {
         return hand;
     }
 
-    private boolean checkHand() {
+    public boolean checkHand() {
         boolean winFlag = true;
         
         int firstCard = hand.get(0);

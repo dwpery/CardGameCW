@@ -6,9 +6,15 @@ import org.junit.AfterClass;
 import static org.junit.Assert.*;
 
 public class TestCardDeck {
+    CardDeck deck;
+    
+    @Before
+    public void setUp() {
+        deck = new CardDeck(1);
+    }
+    
     @Test
     public void testFifoOrder() {
-        CardDeck deck = new CardDeck(1);
         deck.addCard(1);
         deck.addCard(6);
         deck.addCard(7);
