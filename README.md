@@ -25,8 +25,8 @@ tests/
 
 Download source code and traverse to `src` file then run the following commands:
 
-1. `javac CardGame.java CardDeck.java Player.java`
-2. `java CardGame`
+1. `javac -d bin src/CardGame.java src/CardDeck.java src/Player.java`
+2. `java -cp bin CardGame`
 
 The game will now run, when prompted for players enter the num you wish. A card pack for 4 players is provided.
 
