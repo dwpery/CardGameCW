@@ -1,18 +1,40 @@
-## Getting Started
+# ECM 2414 Software Development Continuous Assessment
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+## Overview
+
+This is our multi-threaded card game solution for the ECM 2414 Software Development Continuous Assessment. It uses thread-safe `CardDeck` and `Player` classes operating in a game loop controlled by the main `CardGame` class to fully simulate the logic of a round of Spoons. The number of players and location for pack of cards is taken from user input in the terminal.
+
+## Dependencies
+
+<b>JDK Version:</b> 25.0.2
+<b>Testing Framework:</b> JUnit 4.13.2
 
 ## Folder Structure
 
-The workspace contains two folders by default, where:
+src/
+* `CardGame.java` - Executable class which handles the user input, card distribution and thread initialisation and deletion
+* `CardDeck.java` - Thread-safe FIFO card deck container
+* `Player.java` - Thread-safe player class which handles main gameplay methods and file handling for logging movements to `.txt` file
+tests/
+* `TestCardDeck.java` - JUnit test class to verify CardDeck class is to the specs standards
+* `TestPlayer.java` - JUnit test class to verify Player class is to the specs standards
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+## Compilation Instructions
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+### To run the game
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+Download source code and traverse to `src` file then run the following commands:
 
-## Dependency Management
+1. `javac CardGame.java CardDeck.java Player.java`
+2. `java CardGame`
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+The game will now run, when prompted for players enter the num you wish. A card pack for 4 players is provided.
+
+### To run tests
+
+To run the JUnit tests first ensure you're in the root directory, then type the following commands:
+
+1. `javac -cp "lib/*" -d bin src/*.java tests/*.java`
+2. `java -cp "bin;lib/*" org.junit.runner.JUnitCore TestCardDeck TestPlayer`
+
+The terminal will then output the time taken and number of successful tests.
