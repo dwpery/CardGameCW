@@ -12,7 +12,8 @@ public class TestCardDeck {
     public void setUp() {
         deck = new CardDeck(1);
     }
-    
+
+    // Ensures the First cards added to the deck are the first to be removed
     @Test
     public void testFifoOrder() {
         deck.addCard(1);

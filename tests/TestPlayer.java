@@ -19,6 +19,7 @@ public class TestPlayer {
         player = new Player(1, drawDeck, depositDeck);
     }
     
+    // Tests if a player starts with a winning hand they're able to detect it
     @Test
     public void testImmediateWinDetection() {
         player.addCardToHand(1);
@@ -29,6 +30,7 @@ public class TestPlayer {
         assertTrue("Hand full of 4 identical cards should return true when checked if its won", player.checkHand());
     }
 
+    // Tests if a player starts with a non-winning hand they're able to detect it
     @Test
     public void testRandomHandLoses() {
         player.addCardToHand(4);
@@ -88,5 +90,41 @@ public class TestPlayer {
         int finalTotalCards = drawDeck.getContents().size() + depositDeck.getContents().size() + player.getHand().size();
 
         assertEquals("Number of cards does not change in the game loop", totalCards, finalTotalCards);
+    }
+
+    // Tests player instances successfully initialise a corresponding .txt file for output
+    @Test
+    public void testFileCreation() {
+      Player fileTest = new Player(5, drawDeck, depositDeck);
+      java.io.File file = new java.io.File("player5_output.txt");
+      
+      // Completes test and cleans up file after
+      assertTrue("Player output file should be created when a new player is initialised", file.exists());
+      file.delete();
+    }
+
+    // Tests wether multiple threads can access the same deck without error
+    @Test
+    public void testDeckAccess() throws InterruptedException {
+        CardDeck sharedDeck = new CardDeck(2);
+
+        // Defines concurrency stress test as threadable task
+        Runnable task = () -> {
+            for (int i = 0; i < 100; i++) {
+                sharedDeck.addCard(i);
+                sharedDeck.drawCard();
+            }
+        };
+
+        Thread t1 = new Thread(task);
+        Thread t2 = new Thread(task);
+
+        t1.start();
+        t2.start();
+        t1.join();
+        t2.join();
+
+        // Deck remains empty as every add card should be paired with a draw card
+        assertTrue("Deck should stay empty if threads interact properly", sharedDeck.getContents().isEmpty());
     }
 }
