@@ -160,7 +160,7 @@ public class Player implements Runnable {
         // Checks wether game is won but NOT by this player
         if (CardGame.winningPlayer != playerIndex && CardGame.winningPlayer != -1) {
             try {
-                writer.write("\nplayer " + CardGame.winningPlayer + " has informed player " + playerIndex + " that player  "+ CardGame.winningPlayer + " has won");
+                writer.write("\nplayer " + CardGame.winningPlayer + " has informed player " + playerIndex + " that player "+ CardGame.winningPlayer + " has won");
                 writer.write("\nplayer " + playerIndex + " exits");
                 writer.write("\nplayer " + playerIndex + " hand: " + hand);
                 writer.close();
