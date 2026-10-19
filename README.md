@@ -14,7 +14,8 @@ This is our multi-threaded card game solution for the ECM 2414 Software Developm
 src/
 * `CardGame.java` - Executable class which handles the user input, card distribution and thread initialisation and deletion
 * `CardDeck.java` - Thread-safe FIFO card deck container
-* `Player.java` - Thread-safe player class which handles main gameplay methods and file handling for logging movements to `.txt` file
+* `Player.java` - Thread-safe player class which handles main gameplay methods and file handling for logging movements to `.txt` file.
+  
 <br>tests/
 * `TestCardDeck.java` - JUnit test class to verify CardDeck class is to the specs standards
 * `TestPlayer.java` - JUnit test class to verify Player class is to the specs standards
