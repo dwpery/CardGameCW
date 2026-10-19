@@ -1,0 +1,4 @@
+
+player 1 draws a 8 from deck 1
+player 1 discards a 3 to deck 2
+player 1 current hand [1, 2, 4, 8]
