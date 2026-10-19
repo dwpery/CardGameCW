@@ -7,7 +7,7 @@ This is our multi-threaded card game solution for the ECM 2414 Software Developm
 ## Dependencies
 
 <b>JDK Version:</b> 25.0.2
-<b>Testing Framework:</b> JUnit 4.13.2
+<br><b>Testing Framework:</b> JUnit 4.13.2
 
 ## Folder Structure
 
