@@ -24,7 +24,11 @@ src/
 
 ### To run the game
 
-Download source code and open to the root folder then run the following commands:
+Download the repository, open to the root folder then run the executable .jar:
+
+`java -jar CardGame.jar`
+
+ Or type the following commands to build from source code:
 
 1. `javac -d bin src/CardGame.java src/CardDeck.java src/Player.java`
 2. `java -cp bin CardGame`
