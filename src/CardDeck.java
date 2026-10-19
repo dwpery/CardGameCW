@@ -9,6 +9,7 @@ public class CardDeck {
         this.deckID = deckNum;
     }
 
+    // Returns ID assigned when instance is created
     public int getID() {
         return deckID;
     }

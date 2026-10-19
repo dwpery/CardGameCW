@@ -3,7 +3,7 @@ import java.io.File;
 import java.util.Scanner;
 
 public class CardGame {
-    //
+    // Global as they need to be used by the player class as well as this class
     public static volatile boolean gameWon = false;
     public static volatile int winningPlayer = -1;
     public static void main(String[] args) throws Exception {
@@ -19,18 +19,18 @@ public class CardGame {
         // Closes scanner to prevent resource leak
         scanner.close();
 
-        // Generates CardDeck and Player instances
+        // Generates arrays for CardDeck and Player instances
         CardDeck[] decks = new CardDeck[totalPlayers];
         Player[] players = new Player[totalPlayers];
         
-        // Generates a deck for each player
+        // Populates decks array with deck class instances
         for (int i = 0; i < totalPlayers; i++) {
             decks[i] = new CardDeck(i + 1);
         }
 
-        // Generates num of player instances input in terminal
+        // Populates players array with player class instances 
         for (int i = 0; i < totalPlayers; i++) {
-            // Needs seperate loop otherwise NullPointerException
+            // Needs separate loop otherwise NullPointerException
             if ((i + 1) == totalPlayers) {
                 // The final players deposit deck loops back around to be the 1st deck
                 players[i] = new Player(i + 1, decks[i], decks[0]);
@@ -41,20 +41,17 @@ public class CardGame {
 
         // Distributes cards from pack in round robin form
         try (Scanner reader = new Scanner(new File(packFile))) {
-            // Adds caards to players hands
+            // Adds cards to players hands
             for (int n = 0; n < 4; n++) {
                 for (int i = 0; i < totalPlayers; i++) {
                     players[i].addCardToHand(Integer.parseInt(reader.nextLine()));
-                    System.out.println(i + ": " + players[i].getHand());
                 }
             }
-            System.out.println("Decks");
             // Adds remaining cards to decks    
             for (int n = 0; n < 4; n++) {
-                // Same num of playuers as decks so can use totalPlayers
+                // Same num of players as decks so can use totalPlayers
                 for (int i = 0; i < totalPlayers; i++) {
                     decks[i].addCard(Integer.parseInt(reader.nextLine()));
-                   System.out.println(i + ": " + decks[i].getContents());
                 }
             }
         } catch (FileNotFoundException e) {
@@ -69,7 +66,7 @@ public class CardGame {
             playerThreads[i].start();
         }
         
-        //
+        // Waits for all threads to finish before exiting main
         for (int i = 0; i < totalPlayers; i++) {
             try {
                 playerThreads[i].join();

@@ -24,12 +24,13 @@ src/
 
 ### To run the game
 
-Download source code and traverse to `src` file then run the following commands:
+Download source code and open to the root folder then run the following commands:
 
 1. `javac -d bin src/CardGame.java src/CardDeck.java src/Player.java`
 2. `java -cp bin CardGame`
 
 The game will now run, when prompted for players enter the num you wish. A card pack for 4 players is provided.
+<br><i>Note: Please include 'src/' in your file path for the card pack when asked which to load</i>
 
 ### To run tests
 

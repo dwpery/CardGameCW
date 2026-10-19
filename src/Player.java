@@ -16,7 +16,7 @@ public class Player implements Runnable {
         this.drawDeck = drawDeck;
         this.depositDeck = depositDeck;
         
-        // Creates file
+        // Creates corresponding output file
         try {
             writer = new FileWriter("player" + playerIndex + "_output.txt");
             writer.flush();
@@ -26,17 +26,21 @@ public class Player implements Runnable {
         }
     }
 
+    // Appends card value to hand
     public void addCardToHand(int cardValue) {
         hand.add(cardValue);
     }
 
+    // Returns the players hand
     public List<Integer> getHand() {
         return hand;
     }
 
+    // Checks hand's state to verify wether all cards are equal
     public boolean checkHand() {
         boolean winFlag = true;
         
+        // Compares all values in hand to the 1st, if one doesnt match then hand doesn't win
         int firstCard = hand.get(0);
         for (int i = 0; i < hand.size(); i++) {
             if (firstCard != hand.get(i)) {
@@ -47,6 +51,8 @@ public class Player implements Runnable {
         return winFlag;
     }
 
+    // Main method that contains the players atomic movement logic for their WHOLE turn 
+    // Synchronised to make it thread-safe
     public synchronized void move() {
         // Takes card from deck
         int drawnCard = drawDeck.drawCard();
@@ -62,9 +68,11 @@ public class Player implements Runnable {
 
         // Picks random card from hand to discard
         boolean discardFlag = false;
+        // Loops until card is finally discarded
         while (discardFlag != true) {
             int randomNum = (int)(Math.random() * hand.size());
             int cardToDiscard = hand.get(randomNum);
+            // Checks randomly picked card isnt this players prefered denomination
             if (cardToDiscard != playerIndex) {
                 // Removes random non card from
                 depositDeck.addCard(cardToDiscard);
@@ -85,8 +93,10 @@ public class Player implements Runnable {
         }
     }
 
+    // 
     @Override 
     public void run() {
+        // Prints initial hand at start of each game
         try {
             writer.write("\nplayer " + playerIndex + " initial hand " + hand);
             writer.flush();
@@ -95,6 +105,7 @@ public class Player implements Runnable {
             e.printStackTrace();
         }
 
+        // Checks if players starting hand meets win criteria
         if (checkHand()) {
             System.out.println("Player " + playerIndex + " wins");
             try {
@@ -106,14 +117,19 @@ public class Player implements Runnable {
                 System.out.println("Failed to write to file");
                 e.printStackTrace();
             }
+
+            // Updates global vars to inform other players this player has won 
             CardGame.gameWon = true;
             CardGame.winningPlayer = playerIndex;
             return;
         }
 
+        // Continues taking turns until any player has won
         while (!CardGame.gameWon) {
+            // Performs main move logic during turn
             move();
 
+            // Checks if players hand meets win criteria after they've drawn card
             if (checkHand()) {
                 System.out.println("Player " + playerIndex + " wins");
                 try {
@@ -125,12 +141,15 @@ public class Player implements Runnable {
                     System.out.println("Failed to write to file");
                     e.printStackTrace();
                 }
+
+                // Updates global vars to inform other players this player has won
                 CardGame.gameWon = true;
                 CardGame.winningPlayer = playerIndex;
                 break;
             }
 
             try {
+                // Pausing threads paces gameplay allows screen writers to finish before thread is joined
                 Thread.sleep(200);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
@@ -138,6 +157,7 @@ public class Player implements Runnable {
             }
         }
 
+        // Checks wether game is won but NOT by this player
         if (CardGame.winningPlayer != playerIndex && CardGame.winningPlayer != -1) {
             try {
                 writer.write("\nplayer " + CardGame.winningPlayer + " has informed player " + playerIndex + " that player  "+ CardGame.winningPlayer + " has won");
