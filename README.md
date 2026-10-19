@@ -26,7 +26,7 @@ src/
 
 Download the repository, open to the root folder then run the executable .jar:
 
-`java -jar CardGame.jar`
+`java -jar cards.jar`
 
  Or type the following commands to build from source code:
 
